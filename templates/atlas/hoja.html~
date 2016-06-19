@@ -1,0 +1,542 @@
+{% extends "maps/map_base.html" %}
+{% load i18n %}
+{% load dialogos_tags %}
+{% load agon_ratings_tags %}
+{% load url from future %}
+{% load base_tags %}
+
+{% load staticfiles %}
+
+{% block title %}{{ hoja_atlas.nombre|capfirst }} {% endblock %}
+
+
+{% block head %}
+{% include "maps/map_include.html" %}
+
+{{ block.super }}
+{% endblock %}
+
+{% block body_class %}maps{% endblock %}
+
+{% block body_outer %}
+
+
+
+
+<html lang="es">
+	<head>
+
+<style type="text/css">
+/* Mis CSSs*/
+
+.content-wrap {
+background: #fff;
+padding: 0px 0 0 0px;
+width: 980px;
+min-height: 400px;
+margin: 0 auto 30px;
+}
+
+.panel-title .row{
+margin-left: 0px;
+}
+
+
+.titulo-articulo-G {
+  text-align: left;
+  font-family: Cambria, serif;
+  font-size: 20px;
+  font-weight: bold;
+  color: white;
+  background-color: {{ hoja_atlas.color}};
+  margin-left: 0px;
+}
+.titulo-articulo-N {
+  text-align: left;
+  font-family: Cambria, serif;
+  font-size: 20px;
+  font-weight: bold;
+  color: white;
+  background-color: {{ hoja_atlas.color}};
+  margin-left: 0px;
+}
+.titulo-articulo-C {
+  text-align: left;
+  font-family: Cambria, serif;
+  font-size: 20px;
+  font-weight: bold;
+  color: white;
+  background-color: {{ hoja_atlas.color}};
+  margin-left: 0px;
+}
+.titulo-articulo-V {
+  text-align: left;
+  font-family: Cambria, serif;
+  font-size: 20px;
+  font-weight: bold;
+  color: white;
+  background-color: {{ hoja_atlas.color}};
+  margin-left: 0px;
+
+}
+.titulo-articulo-A {
+  text-align: left;
+  font-family: Cambria, serif;
+  font-size: 20px;
+  font-weight: bold;
+  color: white;
+  background-color:{{ hoja_atlas.color}};
+  margin-left: 0px;
+}
+.articulo {
+  padding-right: 15px;
+  padding-left: 15px;
+  text-align: justify;
+  font-family: Cambria, serif;
+  font-size: 12px;
+  margin-left: 0px;
+}
+.subtitulo1{
+  text-align: left;
+  font-family: Cambria, serif;
+  font-size: 13px;
+  font-weight: bold;
+}
+.autor{
+  text-align: right;
+  font-family: Cambria, serif;
+  font-size: 14px;
+  font-weight: bold;
+  font-style: oblique;
+}
+.titulo-mapa{
+  text-align: left;
+  font-family: Cambria, serif;
+  font-size: 24px;
+  font-weight: bold;
+  color: white;
+}
+.titulo-clave{
+  text-align: right;
+  font-family: Cambria, serif;
+  font-size: small;
+  font-weight: bold;
+  color: white;
+  font-style: oblique;
+  vertical-align: middle;
+  padding-top: 8px;
+}
+
+p.clima {
+  margin: 0 0 10px;
+  text-align: center;
+}
+p.crater{
+  padding-left: 20px
+}
+/*tablas*/
+/*tablas suelos con imagenes*/
+.table-s-i {
+  width: 100%;
+  max-width: 100%;
+  margin-bottom: 20px;
+  margin-right: 10px;
+  margin-left: 0px;
+}
+.table-s-i > thead > tr > th,
+.table-s-i > tbody > tr > th,
+.table-s-i > tfoot > tr > th,
+.table-s-i > thead > tr > td,
+.table-s-i > tbody > tr > td,
+.table-s-i > tfoot > tr > td {
+  padding: 8px;
+  line-height: 1.42857143;
+  vertical-align: top;
+  border-top: 1px solid #000;
+}
+.table-s-i > thead > tr > th {
+  vertical-align: bottom;
+  border-bottom: 2px solid #ddd;
+}
+.table-s-i > caption + thead > tr:first-child > th,
+.table-s-i > colgroup + thead > tr:first-child > th,
+.table-s-i > thead:first-child > tr:first-child > th,
+.table-s-i > caption + thead > tr:first-child > td,
+.table-s-i > colgroup + thead > tr:first-child > td,
+.table-s-i > thead:first-child > tr:first-child > td {
+  border-top: 0;
+}
+.table-s-i > tbody + tbody {
+  border-top: 2px solid #ddd;
+}
+.table-s-i .table-s-i {
+  background-color: #fff;
+}
+
+/*tablas suelos 2*/
+table {
+  background-color: transparent;
+}
+th {
+  text-align: center;
+}
+.table-s {
+  width: 100%;
+  max-width: 100%;
+  margin-bottom: 20px;
+  margin-right: 10px;
+  margin-left: 0px;
+}
+.table-s > thead > tr > th,
+.table-s > tbody > tr > th,
+.table-s > tfoot > tr > th,
+.table-s > thead > tr > td,
+.table-s > tbody > tr > td,
+.table-s > tfoot > tr > td {
+  padding: 3px;
+  line-height: 1.42857143;
+  vertical-align: middle;
+  border-top: 1px solid #000;
+}
+.table-s > thead > tr > th {
+  vertical-align: bottom;
+  border-bottom: 2px solid #ddd;
+}
+
+.leyenda {
+padding-bottom: 58px;
+}
+
+.table-s > caption + thead > tr:first-child > th,
+.table-s > colgroup + thead > tr:first-child > th,
+.table-s > thead:first-child > tr:first-child > th,
+.table-s > caption + thead > tr:first-child > td,
+.table-s > colgroup + thead > tr:first-child > td,
+.table-s > thead:first-child > tr:first-child > td {
+  border-top: 0;
+}
+.table-s > tbody + tbody {
+  border-top: 2px solid #ddd;
+}
+.table-s .table-s {
+  background-color: #fff;
+}
+.panel-naturaleza {
+  border-color: #6aa942;
+
+}
+.articulo-tabla{
+  vertical-align: middle;
+  text-align: center;
+  font-family: Cambria, serif;
+  font-size: 12px;
+  font-weight: bold;
+}
+/* definicion de los paneles para cada tema*/
+.panel-primary {
+  border-color: #428bca;
+}
+
+/* colores para cada tema*/ 
+.panel-naturaleza {
+  border-color: #6aa942;
+  margin-right: 5px;
+  margin-left: 5px;
+ }
+.panel-clima {
+  border-color: #F5CF36;
+
+}
+.panel-geomorfometria {
+  border-color: #9A131B;
+
+}
+.panel-amenazas {
+  border-color: #DF1A23; 
+
+}
+  
+.panel-vulnerabilidad {
+  border-color: #252268; 
+ 
+}
+
+.panel-primary > .panel-heading {
+  color: #fff;
+  background-color: {{ hoja_atlas.color}};
+  border-color: {{ hoja_atlas.color}};
+}
+
+.panel-naturaleza > .panel-heading {
+  color: #fff;
+  background-color: {{ hoja_atlas.color }};
+  border-color: #6aa942;
+  width: 1010px;
+
+}
+.panel-naturaleza > .panel-heading + .panel-collapse > .panel-body {
+  border-top-color: #6aa942;
+}
+.panel-naturaleza > .panel-heading .badge {
+  color: #6aa942;
+  background-color: #fff;
+}
+.panel-naturaleza > .panel-footer + .panel-collapse > .panel-body {
+  border-bottom-color: #6aa942;
+}
+
+.panel-clima > .panel-heading {
+  color: #fff;
+  background-color: {{ hoja_atlas.color}};
+  border-color: #F5CF36;
+}
+.panel-clima > .panel-heading + .panel-collapse > .panel-body {
+  border-top-color: {{ hoja_atlas.color}};
+}
+.panel-clima > .panel-heading .badge {
+  color: #6aa942;
+  background-color: #fff;
+}
+.panel-clima > .panel-footer + .panel-collapse > .panel-body {
+  border-bottom-color: #6aa942;
+}
+
+.panel-geomorfometria > .panel-heading {
+  color: #fff;
+  background-color: {{ hoja_atlas.color}};
+  border-color:{{ hoja_atlas.color}};
+}
+.panel-geomorfometria > .panel-heading + .panel-collapse > .panel-body {
+  border-top-color: #6aa942;
+}
+.panel-geomorfometria > .panel-heading .badge {
+  color: #6aa942;
+  background-color: #fff;
+}
+.panel-geomorfometria > .panel-footer + .panel-collapse > .panel-body {
+  border-bottom-color: #6aa942;
+}
+.panel-amenazas > .panel-heading {
+  color: #fff;
+  background-color: {{ hoja_atlas.color}};
+  border-color: {{ hoja_atlas.color}};
+}
+.panel-amenazas > .panel-heading + .panel-collapse > .panel-body {
+  border-top-color: #6aa942;
+}
+.panel-amenazas > .panel-heading .badge {
+  color: #6aa942;
+  background-color: #fff;
+}
+.panel-amenazas > .panel-footer + .panel-collapse > .panel-body {
+  border-bottom-color: #6aa942;
+}
+.panel-vulnerabilidad > .panel-heading {
+  color: #fff;
+  background-color: {{ hoja_atlas.color}};
+  border-color: {{ hoja_atlas.color}};
+}
+.panel-vulnerabilidad > .panel-heading + .panel-collapse > .panel-body {
+  border-top-color: #6aa942;
+}
+.panel-vulnerabilidad > .panel-heading .badge {
+  color: #6aa942;
+  background-color: #fff;
+}
+.panel-vulnerabilidad > .panel-footer + .panel-collapse > .panel-body {
+  border-bottom-color: #6aa942;
+}
+
+
+.three-col {
+       -moz-column-count: 3;
+       -moz-column-gap: 20px;
+       -webkit-column-count: 3;
+       -webkit-column-gap : 20px;
+       -moz-column-rule-color:  #ccc;
+       -moz-column-rule-style:  solid;
+       -moz-column-rule-width:  1px;
+       -webkit-column-rule-color:  #ccc;
+       -webkit-column-rule-style: solid ;
+       -webkit-column-rule-width:  1px;
+}
+
+
+.biblio {
+       -moz-column-count: 3;
+       -moz-column-gap: 20px;
+       -webkit-column-count: 3;
+}
+
+
+</style>
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+    <script type="text/javascript">
+  
+    </script>
+
+		<meta charset="utf-8">
+    	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    	<meta name="viewport" content="width=device-width, initial-scale=1">
+    	<title>hoja_atlas.tema &nbsp &nbsp &nbsp  hoja_atlas.nombre</title>
+		<title>{{ hoja_atlas.tema|title}}&nbsp &nbsp &nbsp &nbsp {{hoja_atlas.nombre|capfirst}}   {</title>
+    	<!-- Bootstrap -->
+    	<!--link href="css/bootstrap.min.css" rel="stylesheet"-->
+    	<link href="css/bootstrap.mod.css" rel="stylesheet">
+
+	    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	    <!--[if lt IE 9]>
+	      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+	      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	    <![endif]-->
+  </head>
+  <body>
+	<div class="panel panel-naturaleza">
+		<div class="panel-heading">
+        	<h3 class="panel-title">
+     		<div class="row">
+    <div class="col-md-6">
+    <p class="titulo-mapa">{{hoja_atlas.tema|capfirst}}   &nbsp &nbsp &nbsp &nbsp{{ hoja_atlas.nombre|title}}</p>
+       </div>
+
+<div class="col-md-6">      		
+<p class="titulo-clave">Autores:  
+{%for autor in hoja_atlas.autor.all%}
+ {{autor.nombre|capfirst|title}}&nbsp{{autor.apellido_paterno|title}} &nbsp{{autor.apellido_materno|title}} , 
+
+{% hoja_atlas.autor.all|last %}
+
+{%  endfor %}</p>
+ </div>
+  </div>
+        	</h3>
+      	</div>
+      	<div class="panel-body">
+      		<div class="table-responsive">
+      			<table class="table">
+		        	<tr>
+		        		<td width="700">
+		        			<!-- MAPA INCRUSTADO-->
+
+<!-- -->
+<!--{% if hoja_atlas.mapaEstatico %} -->
+<!--{% for map in mapasEstaticos %}  -->
+ 
+<!--<iframe style="border: none;" height="700" width="700" src="{{map.get_absolute_url}}/embed"></iframe>  -->
+
+
+<!--descomentar -->
+<!--<img src="{{ tabla.docfile.url }}"   class="img-responsive"/> -->
+
+<!--{% endfor %}  -->
+<!-- <iframe style="border: none;" height="700" width="700" src="{{map.get_absolute_url}}/embed"></iframe> -->
+<!--{% else %} -->
+<!--<p></p> -->
+<!--{% endif %} -->
+
+{% for map in mapas %}
+ 
+<iframe style="border: none;" height="700" width="700" src="{{map.get_absolute_url}}/embed"></iframe>
+
+
+<!--descomentar -->
+<!--<img src="{{ tabla.docfile.url }}"   class="img-responsive"/> -->
+
+{% endfor %}
+
+
+		        		</td>	
+		        		<td>
+
+
+{% for leyenda in leyendas %} 
+<img class ="leyendas" src="{{ leyenda.docfile.url }}"   height="700"   width="300" align="left" />
+
+
+{% endfor %}
+		        		</td>
+		        	</tr>
+	        	</table>
+		    </div>   	
+      	</div>
+	</div>
+	<div class="articulo"><div class="row">
+			<div class="col-md-4">
+				<H2 class="titulo-articulo-V">{{hoja_atlas.tema|capfirst}}   &nbsp{{ hoja_atlas.nombre|capfirst|title}}</H2>
+			</div>
+		</div>
+		<br>
+		<div class="row">
+			<div class="three-col">
+
+{{hoja_atlas.texto|linebreaksbr|capfirst|safe|escape}}
+<br>
+
+
+{%for grafica in graficas %}
+
+
+{% if grafica.docfile %}
+<img src="{{ grafica.docfile.url }}"   class="img-responsive"/>
+
+{% else %}
+<p>{{ grafica.descripcion|capfirst }}</p>
+{% endif %}
+<p>{{ grafica.titulo|capfirst }}</p>
+{% endfor %}
+
+
+
+
+
+			</div>
+
+
+			<div class="col-md-12">
+					
+				<br>
+				{%for tabla in tablas %}
+
+{% if tabla.docfile %}
+<img src="{{ tabla.docfile.url }}"   class="img-responsive"/>
+
+{% else %}
+<p>{{ tabla.descripcion|escape|safe }}</p>
+<div id="piechart" style="width: 900px; height: 500px;"></div>
+{% endif %}
+<p>{{ tabla.titulo|safe|escape }}</p>
+				{% endfor %}		
+			</div>
+			<div class="biblio">
+<p class="subtitulo1">Bibliografía</p>
+<p>  {{hoja_atlas.informacion_bibliografica|linebreaksbr}}</p>
+<br>
+<br>
+<br>
+<br>
+</div>
+<div class="col-md-8">
+{%for imagen in imagenes %}
+<img src="{{ imagen.docfile.url }}"   class="img-responsive"/>
+<br>
+<p> {{ imagen.descripcion|capfirst|safe|escape }}</p>
+{% endfor %}
+</div>
+</div>
+</articulo>
+
+
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="js/bootstrap.min.js"></script>
+
+</body>
+
+
+</html>
+
+ {% endblock %}

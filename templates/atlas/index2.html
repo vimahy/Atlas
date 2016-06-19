@@ -1,0 +1,129 @@
+{% extends "site_base.html" %}
+{% load i18n %}
+{% load url from future %}
+{% load agon_ratings_tags %}
+{% load base_tags %}
+{% load maps_tags %}
+{% load pagination_tags %}
+{% load taggit_extras %}
+{% load staticfiles %}
+
+
+
+{% overall_rating map "map" as map_rating %}
+{% num_ratings map as num_votes %}
+
+
+{% block title %}{% block title_sub %}{% trans "Explore Atlas" %}{% endblock %} - {{ block.super }} {% endblock %}
+
+{% block body_class %}maps{% endblock %}
+
+{% block body_outer %}
+  <div class="span12">
+    <ul class="nav nav-tabs" id="subnav-tabs">
+          <li><a href="{% url "maps_browse" %}" class="explore">{% trans 'Explore Atlas' %}</a></li>
+    </ul>
+  </div>
+
+
+<div class="span12">
+      <a href="{% url "new_map" %}" class="btn btn-large btn-primary pull-right strong">{% trans "Create a New Map" %}</a>
+      <h2 class="page-title">{% trans "Explore Atlas" %}</h2>
+    </div>
+
+
+    <div class="span8 filter">      
+      {% include "search/_sort_filters.html" %}
+    </div>
+
+
+    <div class="span4">
+      <div class="pull-right" data-viewby="list">
+        {% include "_viewby.html" %}
+      </div>
+    </div>
+
+
+
+
+   <div class="span12">
+      <div class="row" id="contain-slider">
+        <div class="span4">
+          <div class="selections">
+            <h4>
+              {% trans "Your selections" %}
+              <a href="." id="clear-search" class="pull-right">{% trans "Clear all" %}</a>
+            </h4>
+          </div>
+          <div id="slide-pane">
+            <a href="#" class="toggle toggle-pane"><i class="icon-chevron-left"></i></a>
+            {% with type='map' %}
+            {% include "search/_extent_filter.html" %}
+            {% include "search/_general_filters.html" %}
+            {% endwith %}
+
+
+          </div>
+        </div>
+        <div class="tab-content span8 paginate paginate-auto" id="search-content">
+
+
+
+
+
+
+
+
+
+{% for hoja in hojas %}
+
+
+{% for results in results %}
+
+
+
+<article id="uno">
+  <div class="content">
+    <div class="item-header">
+      <a href="{{results.id}}"><img class="thumb" src="{{ hoja.thumbnail.url}}" /></a>
+      <h3><i class="icon-map-marker"></i> <a href="{{results.id }}">{{hoja.nombre}}</a></h3>
+    </div>
+    <div class="details">
+      <div class="meta">
+        <p>Map {% trans "from" %}<a href="{% url "profile_detail" map.owner.username %} rel="author">{{results.owner }}</a>{{results.last_modified|timesince }}</p>
+        <p class="abstract">{{hoja.descripcion }}</p>
+        <ul class="nav stats">
+    <li><a href="results.id"><strong>{{results.popular_count}}</strong>  {% trans "view" %}{{ results.popular_count|pluralize }}</a></li>
+
+          <li><a href="{{results.id }}"><strong><span class="avg_rating" data-rating="{{ map_rating }}"> <span class="overall_rating"></span></span></strong>{% trans "Average rating" %} ({{num_votes}} {% trans "votes" %})</a></li>
+        </ul>
+      </div> <!-- /.meta -->
+      <div class="tools">
+        <p id="uno">
+          <a href="{% url "map_download" results.id %}" class="btn btn-mini">{% trans "Download" %}</a>
+          <a href="{% url "map_view" results.id %}" class="btn btn-mini">{% trans "View" %}</a>
+        </p>
+        </p>
+      </div> 
+    </div> <!-- /.details --> 
+  </div> <!-- /.content -->
+</article>
+{% endfor %}
+{% endfor %}
+
+
+      
+        </div>
+      </div>
+    </div>
+
+{% endblock %}
+
+{% block extra_script %}
+  <script type="text/javascript">
+  var default_type = 'map';
+  </script>
+  {% with include_spatial='true' %}
+  {% include 'search_scripts.html' %}
+  {% endwith %}
+{% endblock extra_script %}

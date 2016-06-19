@@ -1,0 +1,47 @@
+{% extends "site_base.html" %}
+{% load i18n %}
+{% load staticfiles %}
+{% load base_tags %}
+{% block body %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> Cargar una Tabla</title>
+    </head>
+    <body>
+
+
+<div class="page-header">
+
+
+ <a href=/atlas/ class="btn btn-success pull-right">{% trans "Regresar al atlas" %}</a>
+<div class="btn-group">
+  <button type="button" class="btn btn-primary dropdown-toggle pull-right"
+          data-toggle="dropdown">
+    Cargar elementos a una hoja <span class="caret"></span>
+  </button>
+ 
+  <ul class="dropdown-menu  pull-right" role="menu">
+<li> <a href=/atlas/cargarAutor ">{% trans "Añadir un autor a una hoja" %}</a>
+<li> <a href=/atlas/cargarHoja ">{% trans "Create una nueva Hoja de Atlas" %}</a>
+ <li> <a href=/atlas/cargarTabla >{% trans "Cargar Tabla" %}</a></li>
+   <li><a href=/atlas/cargarLeyenda >{% trans "Cargar Leyenda" %}</a></li>
+    <li><a href=/atlas/cargarImagen >{% trans "Cargar Imagen" %}</a></li>
+    <li><a href=/atlas/cargarGrafica >{% trans "Cargar Grafica" %}</a></li>
+  </ul>
+</div>
+  <h2>{% trans "Cargar Grafica" %}</h2>
+</div>
+
+ <form  method="post" action="cargarGrafica" enctype="multipart/form-data" > 
+   {% csrf_token %}
+  <table>
+    {{ formGrafica.as_table }}
+  </table>
+   {% csrf_token %}
+    <input type="submit" value="submit" class="btn btn-danger value="Crear hoja " />
+</form>
+    </body>
+
+</html>
+{% endblock %}

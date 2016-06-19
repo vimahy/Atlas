@@ -1,0 +1,71 @@
+{% extends 'site_base.html' %}
+{% block body %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> Cargar hoja de Atlas</title>
+    </head>
+    <body>
+<h1>Agregar hoja</h1>
+<h3>Datos sobre la hoja</h3>
+
+
+ <form  method="post" action="cargar" > 
+            
+        
+
+ {% csrf_token %}
+  <table>
+    {{ formHoja_atlas.as_table }}
+  </table>
+
+			<BR>  </BR>
+    
+<h3>Autores de la hoja </h3>
+
+ {% csrf_token %}
+  <table>
+    {{ formAutor.as_table }}
+  </table>
+
+<h3>Subir tabla</h3>
+
+ {% csrf_token %}
+  <table>
+    {{ formTabla.as_table }}
+  </table>
+
+
+<h3>Subir leyenda</h3>
+
+ {% csrf_token %}
+  <table>
+    {{ formLeyenda.as_table }}
+  </table>
+
+<h3>Subir imagen</h3>
+
+ {% csrf_token %}
+  <table>
+    {{ formImagen.as_table }}
+  </table>
+
+<h3>Subir gráfica</h3>
+ {% csrf_token %}
+ <table>
+            {{ formGrafica.as_table }}
+        </table>
+
+<h3>Referencias</h3>
+ {% csrf_token %}
+ <table>
+            {{ formReferencia.as_table }}
+        </table>
+
+
+           <input type="submit" name="submit" class="btn btn-danger value="Crear hoja " />
+        </form>
+    </body>
+
+</html>
+{% endblock %}

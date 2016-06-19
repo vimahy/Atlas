@@ -1,0 +1,9 @@
+{% if hojas %}
+    <ul>
+    {% for hoja_atlas in hojas %}
+        <li><a href="/atlas/{{ hoja_atlas.id }}/">{{ hoja_atlas.nombre }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>Ninguna hoja disponible.</p>
+{% endif %}

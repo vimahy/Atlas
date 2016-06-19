@@ -1,0 +1,942 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Explorar Temas </title>
+    
+      <link href="/static/geonode/css/base.css" rel="stylesheet" />
+      <link href='/static/geonode/font/lato_font.css' rel='stylesheet' type='text/css' />
+      <link href="/static/geonode/css/ext-compatibility.css" rel="stylesheet" />
+      
+      <link href="/static/lib/css/assets.min.css" rel="stylesheet"/>
+      
+      
+      
+    
+    <!--[if lt IE 9]>
+      <script src="https://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body class="maps explore">
+    
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <section>
+        <div class="container">
+          <div class="row">
+            <div class="span3">
+              <a href="/"><span class="nav-logo"></span></a>
+            </div>
+            <div class="span9">
+              <div class="nav-collapse pull-right">
+                <div class="pull-right">
+                  <ul class="nav pull-right account-bar">
+                    
+                      <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Regístrate</a>
+                        <ul class="dropdown-menu">
+                          <li>
+                            <form action="/account/login/" method="post" class="sign-in">
+                            <input type='hidden' name='csrfmiddlewaretoken' value='ogerI1O2T541J9ayYxXtem0Xh4jU8V9f' />
+                              <label for="id_username">Usuario:</label>
+                              <input id="id_username" name="username" type="text" />
+                              <label for="id_password">Clave:</label>
+                              <input id="id_password" name="password" type="password" />
+                              <label class="checkbox">
+                                <input type="checkbox" />
+                                  Recordarme
+                              </label>
+                              <button type="submit" class="btn pull-right">Regístrate</button>
+                            </form>
+                          </li>
+                        </ul>
+                      </li>
+                      
+                      <li class="divider-v">|</li>
+                      <li class="actions">
+                        <a href="/help/" rel="tooltip" title="help"><i class="icon-question-sign"></i></a>
+                      </li>
+                    
+                  </ul>
+                </div>
+              </div>
+              <form class="input-append  pull-right" action="/search/" method="GET">
+                
+                <input id="search" type="text" name="q"/>
+              </form>
+            </div>
+          </div>
+          <div class="row nav-box">
+            <div class="span10">
+              <nav class="main-nav">
+                <ul>
+                  <li id="nav_home">
+                    <a href="/">Inicio</a>
+                  </li>
+                  <li id="nav_data">
+                    <a href="/layers/">Capas</a>
+                  </li>
+                  <li id="nav_maps">
+                    <a href="/maps/">Mapas</a>
+
+                  <!--li liga para el atlas
+                  </li-->
+                  </li>
+                      <li id="nav_maps">
+                    <a href="http://132.248.26.130/indiceAtlas/">Atlas</a>
+                  </li>
+                  
+                  <!--li id="nav_documents">
+                    <a href="/documents/">Documentos</a>
+                  </li-->
+                  
+                  <li id="nav_people">
+                    <a href="/people/">Gente</a>
+                  </li>
+                  <li id="nav_search">
+                    <a href="/search/form/">Buscar</a>
+                  </li>
+                  
+                </ul>
+              </nav>
+            </div> <!-- ./span10 -->
+            
+            <div class="span2">
+              <ul class="social">
+                  <li><a href="http://www.facebook.com/sharer.php?u=http://132.248.26.130/maps/" class="fb">facebook</a></li>
+                  <li><a href="https://twitter.com/share?url=http://132.248.26.130/maps/" class="tw">twitter</a></li>
+                  <li><a href="https://plusone.google.com/_/1/confirm?hl=en&url=http://132.248.26.130/maps/" class="gp">google+</a></li>
+              </ul>
+            </div> <!-- /.span2 -->
+            
+          </div> <!-- /.row nav-box -->
+        </div> <!-- /.container -->
+        </section>
+      </div> <!-- /.navbar-inner -->
+    </div> <!-- /.navbar navbar-fixed-top -->
+    
+
+    
+    
+    <div class="content-wrap">
+      
+      <div class="container">
+        <div class="row">
+        
+  <div class="span12">
+    <ul class="nav nav-tabs" id="subnav-tabs">
+          <li><a href="/maps/" class="explore">Explorar Temas</a></li>
+    </ul>
+  </div>
+  
+    <div class="span12">
+      <a href="/maps/new" class="btn btn-large btn-primary pull-right strong">Crear Mapa</a>
+      <h2 class="page-title">Explorar Temas de Atlas</h2>
+    </div>
+    <div class="span8 filter">      
+      
+
+<ul class="nav nav-pills filter" id="sort">
+  <li><a data-class="newest" class="date-query selected">Más reciente</a></li>
+  <li><a data-class="oldest" class="date-query">Menos Recientes</a></li>
+  <li><a data-class="alphaaz" class="date-query">A - Z</a></li>
+  <li><a data-class="alphaza" class="date-query">Z - A</a></li>
+  <li><a data-class="popularity" class="date-query">Más popular</a></li>
+  <li><a data-class="rel" class="date-query">Importancia</a></li>
+</ul>
+
+    </div>
+    <div class="span4">
+      <div class="pull-right" data-viewby="list">
+        
+<nav class="viewby">
+    Ver por
+    <a href="" class="grid"><i class="icon-th"></i> Grilla</a>
+    <a href="" class="list"><i class="icon-th-list"></i> Lista</a>
+</nav>
+
+      </div>
+    </div>
+    <div class="span12">
+      <div class="row" id="contain-slider">
+        <div class="span4">
+          <div class="selections">
+            <h4>
+              Tus selecciones
+              <a href="." id="clear-search" class="pull-right">Clear all</a>
+            </h4>
+          </div>
+          <div id="slide-pane">
+            <a href="#" class="toggle toggle-pane"><i class="icon-chevron-left"></i></a>
+             
+            
+
+
+<nav class="filter">
+  <h2><a href="#" class="toggle toggle-nav"><i class="icon-chevron-right"></i>Temas</a></h2>
+  <ul class="nav hide" id="categories">
+    <li><a data-class="all" class="active trigger-query">Todas las Categorías</a></li>
+    
+
+        
+        <li><a data-class="farming" class="trigger-query">1. El espacio natural
+        
+        <span class="badge pull-right">0</span>
+        
+        </a></li>
+        
+    
+        
+        
+        
+    
+        
+        <li><a data-class="health" class="trigger-query">2. Indicadores climáticos
+        
+        <span class="badge pull-right">0</span>
+        
+        </a></li>
+        
+    
+        
+ 
+        
+    
+        
+        <li><a data-class="planningCadastre" class="trigger-query">3. Geomorfometría
+        
+        <span class="badge pull-right">0</span>
+        
+        </a></li>
+        
+    
+        
+
+        
+    
+           <li><a data-class="planningCadastre" class="trigger-query">4. Amenazas de origen natural y socio-natural
+        
+        <span class="badge pull-right">0</span>
+        
+        </a></li>
+        
+       <li><a data-class="planningCadastre" class="trigger-query">5. Caracterización de la vulnerabilidad socio-económica
+        
+        <span class="badge pull-right">0</span>
+        
+        </a></li>
+        
+    
+
+        
+        
+    
+  </ul>
+</nav>
+<nav class="filter">
+  <h2><a href="#" class="toggle toggle-nav"><i class="icon-chevron-right"></i>Fecha</a></h2>
+  <ul class="nav hide" id="date_start">
+    <label>Date begins after:</label>
+    <li><input value="yyyy-mm-dd" data-date-format="yyyy-mm-dd" type="text" class="datepicker" placeholder="yyyy-mm-dd" /></li>
+  </ul>
+  <ul class="nav hide" id="date_end">
+    <label>Date ends before:</label>
+    <li><input value="yyyy-mm-dd" data-date-format="yyyy-mm-dd" type="text" class="datepicker" placeholder="yyyy-mm-dd" /></li>
+  </ul>
+</nav>
+<nav class="filter">
+  <h2><a href="#" class="toggle toggle-nav"><i class="icon-chevron-right"></i> Palabras claves</a></h2>
+  <ul class="nav hide" id="keywords">
+    
+  </ul>
+</nav>
+
+            
+          </div>
+        </div>
+        <div class="tab-content span8 paginate paginate-auto" id="search-content">
+          
+
+<div class="tab-pane active list paginate-contents" id="all">
+  <p class="search-count">Total: 60</p>
+
+
+
+  
+    
+      
+
+
+<style type="text/css">
+article#uno a ,article#uno h3 [class^="icon-"]{
+color: #6aa942;
+ }
+
+article#dos a ,article#dos h3 [class^="icon-"]{
+color: #F5CF36;
+ }
+
+article#tres a ,article#tres h3 [class^="icon-"]{
+color: #9A131B;
+ }
+
+article#cuatro a ,article#cuatro h3 [class^="icon-"]{
+color: #DF1A23;
+ }
+
+article#cinco a ,article#cinco h3 [class^="icon-"] {
+color: #252268;
+ }
+
+p#uno a{
+color: #FFFFFF;
+ }
+
+
+article#uno * .btn:first-child + .btn,article#uno * .btn:first-child {
+background: #6aa942;
+}
+
+
+article#dos * .btn:first-child + .btn,article#dos * .btn:first-child  {
+background: #F5CF36;
+}
+
+article#tres * .btn:first-child + .btn,article#tres * .btn:first-child  {
+background: #9A131B;
+}
+
+article#cuatro * .btn:first-child + .btn,article#cuatro * .btn:first-child {
+background: #DF1A23;
+}
+
+article#cinco * .btn:first-child + .btn,article#cinco * .btn:first-child  {
+background: #252268;
+}
+
+
+</style>
+
+
+
+
+<article id="uno">
+  <div class="content">
+    <div class="item-header">
+      <a href="I.1 Localizaciвn del estado de Chiapas.html"><img class="thumb" src="I.1.jpg" /></a>
+      <h3><i class="icon-map-marker"></i> <a href="I.1 Localizaciвn del estado de Chiapas.html">I.1 Localización del estado de Chiapas</a></h3>
+    </div>
+    <div class="details">
+      <div class="meta">
+        <p>Map desde <a href="/people/profile/javier/" rel="author">javier</a>, 3 semanas, 3 días hace</p>
+        <p class="abstract">Localizado en el extremo sur de la República, el estado de Chiapas representa uno de los estados del país con gran valor por la diversidad tanto en sus procesos naturales como humanos (Figura I.1.1). Chiapas delimita con Oaxaca, Veracruz y Tabasco así como con la nación de Guatemala, país con el cual guarda ciertas similitudes y comparte elementos naturales y humanos. </p>
+        <ul class="nav stats">
+          <li><a href="/maps/342"><strong>14</strong> vers</a></li>
+          <li><a href="/maps/342#rate"><strong><span class="avg_rating" data-rating="0"> <span class="overall_rating"></span></span></strong>Puntuación media (0 votes)</a></li>
+        </ul>
+      </div> <!-- /.meta -->
+      <div class="tools">
+        <p id="uno">
+          <a href="/maps/342/download" class="btn btn-mini">Descargar</a>
+          <a href="/maps/342/view" class="btn btn-mini">View</a>
+        </p>
+      </div> 
+    </div> <!-- /.details --> 
+  </div> <!-- /.content -->
+</article>
+    
+  
+
+  
+    
+      
+
+
+
+
+
+
+
+<article id="uno">
+  <div class="content">
+    <div class="item-header">
+      <a href="I.10 Suelos.html"><img class="thumb" src="I.10.jpg" /></a>
+      <h3><i class="icon-map-marker"></i> <a href="I.10 Suelos.html">I.10 Suelos</a></h3>
+    </div>
+    <div class="details">
+      <div class="meta">
+        <p>Map desde <a href="/people/profile/javier/" rel="author">javier</a>, 3 semanas, 4 días hace</p>
+        <p class="abstract">El volcanismo genera efectos muy significativos en el ambiente que modifican sensiblemente el paisaje. En la región cercana al volcán Chichón, los diferentes sucesos eruptivos documentados muestran impactantes efectos sucedidos una y otra vez sobre la superficie de la zona. Entre los cambios más significativos en un radio de 10 km se encuentra la desaparición completa de flora y fauna, de los cultivos, cambios en el relieve, azolve de los ríos, desaparición de la fauna acuática, modificación del curso de los ríos, alteración de los climas locales, regionales e incluso globales. </p>
+        <ul class="nav stats">
+          <li><a href="/maps/205"><strong>9</strong> vers</a></li>
+          <li><a href="/maps/205#rate"><strong><span class="avg_rating" data-rating="0"> <span class="overall_rating"></span></span></strong>Puntuación media (0 votes)</a></li>
+        </ul>
+      </div> <!-- /.meta -->
+      <div class="tools">
+        <p id="uno">
+          <a href="/maps/205/download" class="btn btn-mini">Descargar</a>
+          <a href="/maps/205/view" class="btn btn-mini">View</a>
+        </p>
+      </div> 
+    </div> <!-- /.details --> 
+  </div> <!-- /.content -->
+</article>
+    
+  
+
+  
+    
+      
+
+
+
+
+
+
+<article id="uno">
+  <div class="content">
+    <div class="item-header">
+      <a href="I.11 Densidad de cobertura vegetal.html"><img class="thumb" src="I.11.jpg" /></a>
+      <h3><i class="icon-map-marker"></i> <a href="I.11 Densidad de cobertura vegetal.html">I.11 Densidad de cobertura vegetal</a></h3>
+    </div>
+    <div class="details">
+      <div class="meta">
+        <p>Map desde <a href="/people/profile/edson/" rel="author">edson</a>, 1 mes, 1 semana hace</p>
+        <p class="abstract">El objetivo de este mapa es la obtención de la densidad de cobertura vegetal en la región del volcán Chichón por medio de procesos semiautomatizados, en la búsqueda de un método más práctico utilizando un software de acceso libre.</p>
+        <ul class="nav stats">
+          <li><a href="/maps/423"><strong>15</strong> vers</a></li>
+          <li><a href="/maps/423#rate"><strong><span class="avg_rating" data-rating="0"> <span class="overall_rating"></span></span></strong>Puntuación media (0 votes)</a></li>
+        </ul>
+      </div> <!-- /.meta -->
+      <div class="tools">
+       <p id="uno">
+          <a href="/maps/423/download" class="btn btn-mini">Descargar</a>
+          <a href="/maps/423/view" class="btn btn-mini">View</a>
+        </p>
+      </div> 
+    </div> <!-- /.details --> 
+  </div> <!-- /.content -->
+</article>
+    
+  
+
+  
+    
+      
+
+<article id="uno">
+  <div class="content">
+    <div class="item-header">
+      <a href="I.13 Senderos para visitar el volcаn Chichonal.html"><img class="thumb" src="I.13.jpg" /></a>
+      <h3><i class="icon-map-marker"></i> <a href="I.13 Senderos para visitar el volcаn Chichonal.html">I.13 Senderos para visitar el volcán Chichonal</a></h3>
+    </div>
+    <div class="details">
+      <div class="meta">
+        <p>Map desde <a href="/people/profile/javier/" rel="author">javier</a>, 3 semanas, 3 días hace</p>
+        <p class="abstract">En el mapa se proponen sitios estratégicos para ascender al cráter del volcán Chichón, que constituyen el inicio de varios senderos interpretativos de gran interés geológico y geomorfológico. La información registrada en campo se organizó en un SIG, incluyendo un modelo digital del terreno y la orto-foto del 2010. Tomando como referencia los sitios estratégicos de ascenso, se trazaron las posibles trayectorias de otros senderos interpretativos. El mapa incluye los recorridos escénicos (vías de comunicación) que conducen a tres sitios de ascenso (Viejo Volcán, Francisco León y Nicapa) donde se inician los senderos interpretativos que alcanzan el cráter del volcán Chichón. </p>
+        <ul class="nav stats">
+          <li><a href="/maps/345"><strong>22</strong> vers</a></li>
+          <li><a href="/maps/345#rate"><strong><span class="avg_rating" data-rating="0"> <span class="overall_rating"></span></span></strong>Puntuación media (0 votes)</a></li>
+        </ul>
+      </div> <!-- /.meta -->
+      <div class="tools">
+    <p id="uno">
+          <a href="/maps/345/download" class="btn btn-mini">Descargar</a>
+          <a href="/maps/345/view" class="btn btn-mini">View</a>
+        </p>
+      </div> 
+    </div> <!-- /.details --> 
+  </div> <!-- /.content -->
+</article>
+    
+  
+
+  
+    
+      
+
+
+
+
+
+
+
+<article id="uno">
+  <div class="content">
+    <div class="item-header">
+      <a href="I.2 Localizaciвn de la zona de estudio.html"><img class="thumb" src="I.2.jpg" /></a>
+      <h3><i class="icon-map-marker"></i> <a href="I.2 Localizaciвn de la zona de estudio.html">I.2 Localización de la zona de estudio</a></h3>
+    </div>
+    <div class="details">
+      <div class="meta">
+        <p>Map desde <a href="/people/profile/javier/" rel="author">javier</a>, 3 semanas, 4 días hace</p>
+        <p class="abstract">La zona que fue elegida para llevar a cabo la creación de este Atlas se encuentra ubicada en la porción norte del estado de Chiapas, en la subprovincia del norte de Chiapas, la cual destaca por tener un relieve montañoso limitado al norte por la Llanura Costera del Golfo. Este terreno está compuesto principalmente por rocas calizas del Cretácico Superior y del Mioceno. </p>
+        <ul class="nav stats">
+          <li><a href="/maps/411"><strong>19</strong> vers</a></li>
+          <li><a href="/maps/411#rate"><strong><span class="avg_rating" data-rating="0"> <span class="overall_rating"></span></span></strong>Puntuación media (0 votes)</a></li>
+        </ul>
+      </div> <!-- /.meta -->
+      <div class="tools">
+    <p id="uno">
+          <a href="/maps/411/download" class="btn btn-mini">Descargar</a>
+          <a href="/maps/411/view" class="btn btn-mini">View</a>
+        </p>
+      </div> 
+    </div> <!-- /.details --> 
+  </div> <!-- /.content -->
+</article>
+    
+  
+
+  
+    
+      
+
+
+
+
+
+
+
+<article id="uno">
+  <div class="content">
+    <div class="item-header">
+      <a href="I.4 Espacio-mapa spot, 2011.html"><img class="thumb" src="I.4.jpg" /></a>
+      <h3><i class="icon-map-marker"></i> <a href="I.4 Espacio-mapa spot, 2011.html">I.4 Espacio-mapa spot, 2011</a></h3>
+    </div>
+    <div class="details">
+      <div class="meta">
+        <p>Map desde <a href="/people/profile/edson/" rel="author">edson</a>, 1 mes, 1 semana hace</p>
+        <p class="abstract">Los estudios de la superficie de la Tierra a través del uso de técnicas de percepción remota o teledetección se basan en el registro de la radiación electromagnética reflejada o emitida por la superficie terrestre mediante sensores a larga distancia. Entre los sensores más comunes se encuentran las cámaras fotográficas, las cámaras de video y los satélites especializados, el objetivo es obtener información cualitativa y cuantitativa de la radiación electromagnética reflejada o emitida por la superficie terrestre (Chuvieco, 2002; Rosete y Bocco, 2003).</p>
+        <ul class="nav stats">
+          <li><a href="/maps/399"><strong>15</strong> vers</a></li>
+          <li><a href="/maps/399#rate"><strong><span class="avg_rating" data-rating="0"> <span class="overall_rating"></span></span></strong>Puntuación media (0 votes)</a></li>
+        </ul>
+      </div> <!-- /.meta -->
+      <div class="tools">
+       <p id="uno">
+          <a href="/maps/399/download" class="btn btn-mini">Descargar</a>
+          <a href="/maps/399/view" class="btn btn-mini">View</a>
+        </p>
+      </div> 
+    </div> <!-- /.details --> 
+  </div> <!-- /.content -->
+</article>
+    
+  
+
+  
+    
+      
+
+
+
+
+
+
+
+<article id="uno">
+  <div class="content">
+    <div class="item-header">
+      <a href="I.8 Geologбa del crаter.html"><img class="thumb" src="I.8.jpg" /></a>
+      <h3><i class="icon-map-marker"></i> <a href="I.8 Geologбa del crаter.html">I.8 Geología del cráter</a></h3>
+    </div>
+    <div class="details">
+      <div class="meta">
+        <p>Map desde <a href="/people/profile/javier/" rel="author">javier</a>, 3 meses, 2 semanas hace</p>
+        <p class="abstract">En 1984, Rose et al. efectúan una cartografía a detalle del cráter del volcán. El mapa base fue preparado a partir de fotografías aéreas verticales tomadas el 3 de noviembre de 1982, por un vuelo de la NASA (PhelanKotra et al., 1983, en Rose et al., 1984). La base topográfica fue proporcionada por el U.S. Geological Survey, Flagstaff, Mapa I.8. Sin embargo, en el artículo correspondiente no se hace ninguna referencia de la escala del levantamiento. Este mapa se muestra junto con el perfil de una sección que atraviesa al cráter con rumbo NW-SE (Figura I.8.1). </p>
+        <ul class="nav stats">
+          <li><a href="/maps/216"><strong>37</strong> vers</a></li>
+          <li><a href="/maps/216#rate"><strong><span class="avg_rating" data-rating="0"> <span class="overall_rating"></span></span></strong>Puntuación media (0 votes)</a></li>
+        </ul>
+      </div> <!-- /.meta -->
+      <div class="tools">
+<p id="uno">
+          <a href="/maps/216/download" class="btn btn-mini">Descargar</a>
+          <a href="/maps/216/view" class="btn btn-mini">View</a>
+        </p>
+      </div> 
+    </div> <!-- /.details --> 
+  </div> <!-- /.content -->
+</article>
+    
+
+
+
+
+
+
+<article id="dos">
+  <div class="content">
+    <div class="item-header">
+      <a href="II.3yII.4A.html"><img class="thumb" src="II.3.jpg" /></a>
+      <h3><i class="icon-map-marker"></i> <a href="II.3yII.4A.html">II.3 Temperatura mínima mensual enero-junio (1979-2011) y II.4 Temperatura mínima mensual julio-diciembre (1979-2011)</a></h3>
+    </div>
+    <div class="details">
+      <div class="meta">
+        <p>Map desde <a href="/people/profile/javier/" rel="author">javier</a>, 3 semanas, 3 días hace</p>
+        <p class="abstract">Para la realización de los mapas de temperatura mínima (2.3 y 2.4), se utilizaron las siguientes bases de datos:
+				Base de Datos Climatológicos CLICOM versión 2011 (Climate Computing), esta base la distribuye el SMN, en formato de texto plano (ASCII), con resolución temporal diaria, el periodo no está definido ya que es variable para cada estación. La obtención de la base de datos se hace a través del portal del SMN (http://smn.cna.gob.mx).</p>
+        <ul class="nav stats">
+          <li><a href="II.3yII.4A.html"><strong>22</strong> vers</a></li>
+          <li><a href="II.3yII.4A.html"><strong><span class="avg_rating" data-rating="0"> <span class="overall_rating"></span></span></strong>Puntuación media (0 votes)</a></li>
+        </ul>
+      </div> <!-- /.meta -->
+      <div class="tools">
+      <p id="uno">
+          <a href="II.3yII.4A.html" class="btn btn-mini">Descargar</a>
+          <a href="II.3yII.4A.html" class="btn btn-mini">View</a>
+        </p>
+      </div> 
+    </div> <!-- /.details --> 
+  </div> <!-- /.content -->
+</article>
+    
+  
+
+  
+    
+      
+
+
+
+
+
+
+
+<article id="tres">
+  <div class="content">
+    <div class="item-header">
+      <a href="III.3 Densidad de disecciвn.html"><img class="thumb" src="III.3.jpg" /></a>
+      <h3><i class="icon-map-marker"></i> <a href="III.3 Densidad de disecciвn.html">III.3 Densidad de disección</a></h3>
+    </div>
+    <div class="details">
+      <div class="meta">
+        <p>Map desde <a href="/people/profile/javier/" rel="author">javier</a>, 3 semanas, 4 días hace</p>
+        <p class="abstract">Para la realización de los mapas de temperatura mínima (2.3 y 2.4), se utilizaron las siguientes bases de datos:
+				Base de Datos Climatológicos CLICOM versión 2011 (Climate Computing), esta base la distribuye el SMN, en formato de texto plano (ASCII), con resolución temporal diaria, el periodo no está definido ya que es variable para cada estación. La obtención de la base de datos se hace a través del portal del SMN (http://smn.cna.gob.mx). </p>
+        <ul class="nav stats">
+          <li><a href="/maps/329"><strong>19</strong> vers</a></li>
+          <li><a href="/maps/329#rate"><strong><span class="avg_rating" data-rating="0"> <span class="overall_rating"></span></span></strong>Puntuación media (0 votes)</a></li>
+        </ul>
+      </div> <!-- /.meta -->
+      <div class="tools">
+<p id="uno">
+          <a href="/maps/340/download" class="btn btn-mini">Descargar</a>
+          <a href="/maps/329/view" class="btn btn-mini">View</a>
+        </p>
+      </div> 
+    </div> <!-- /.details --> 
+  </div> <!-- /.content -->
+</article>
+    
+  
+
+  
+    
+      
+
+
+
+
+
+
+
+<article id="cuatro">
+  <div class="content">
+    <div class="item-header">
+      <a href="IV.1 Sismicidad.html"><img class="thumb" src="IV.1.jpg" /></a>
+      <h3><i class="icon-map-marker"></i> <a href="IV.1 Sismicidad.html">IV.1 Sismicidad</a></h3>
+    </div>
+    <div class="details">
+      <div class="meta">
+        <p>Map desde <a href="/people/profile/edson/" rel="author">edson</a>, 1 mes, 1 semana hace</p>
+        <p class="abstract">La configuración actual de México es consecuencia de su posición en relación con cuatro placas oceánicas que tienen movimiento simultáneo respecto al continente (placa de América del Norte): Pacífica, Rivera, Cocos y Caribe. Debido a esta interacción en el Pacífico Sur de México, la placa de Cocos es asimilada por la placa de América del Norte; esta subducción ocurre a lo largo de una fosa oceánica que se conoce como Trinchera Mesoamericana (Zamorano y Alcántara, 2010).</p>
+        <ul class="nav stats">
+          <li><a href="/maps/341"><strong>15</strong> vers</a></li>
+          <li><a href="/maps/341#rate"><strong><span class="avg_rating" data-rating="0"> <span class="overall_rating"></span></span></strong>Puntuación media (0 votes)</a></li>
+        </ul>
+      </div> <!-- /.meta -->
+      <div class="tools">
+       <p id="uno">
+          <a href="/maps/341/download" class="btn btn-mini">Descargar</a>
+          <a href="/maps/341/view" class="btn btn-mini">View</a>
+        </p>
+      </div> 
+    </div> <!-- /.details --> 
+  </div> <!-- /.content -->
+</article>
+    
+  
+
+  
+    
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<article id="cinco">
+  <div class="content">
+    <div class="item-header">
+      <a href="V.4 Tasa de crecimiento poblacional a nivel localidad (2000-2005).html"><img class="thumb" src="V.4.jpg" /></a>
+      <h3><i class="icon-map-marker"></i> <a href="V.4 Tasa de crecimiento poblacional a nivel localidad (2000-2005).html">V.4 Tasa de crecimiento poblacional a nivel localidad (2000-2005)</a></h3>
+    </div>
+    <div class="details">
+      <div class="meta">
+        <p>Map desde <a href="/people/profile/javier/" rel="author">javier</a>, 3 meses, 2 semanas hace</p>
+        <p class="abstract">De las 1 581 localidades registradas en la región de estudio por el INEGI en el 2000, solo el 2.6% presentaron un crecimiento alto en el quinquenio 2000-2005, es decir, 42 de ellas. Sin embargo, las localidades de mayor crecimiento no son las cabeceras municipales o localidades consolidadas, sino asentamientos de reciente creación, producto en la mayoría de los casos, de reubicaciones o de retorno de población a sitios anteriormente poblados. En la Figura V.4.1 se puede identificar que el crecimiento predominante en las localidades de la región corresponde a un nivel bajo, este intervalo representa 46.9% del total y se puede observar en el Mapa V.4, que en general se distribuyen a lo largo de los caminos. </p>
+        <ul class="nav stats">
+          <li><a href="/maps/347"><strong>27</strong> vers</a></li>
+          <li><a href="/maps/347#rate"><strong><span class="avg_rating" data-rating="0"> <span class="overall_rating"></span></span></strong>Puntuación media (0 votes)</a></li>
+        </ul>
+      </div> <!-- /.meta -->
+      <div class="tools">
+ <p id="uno">
+          <a href="/maps/347/download" class="btn btn-mini">Descargar</a>
+          <a href="/maps/347/view" class="btn btn-mini">View</a>
+        </p>
+      </div> 
+    </div> <!-- /.details --> 
+  </div> <!-- /.content -->
+</article>
+    
+
+
+
+
+
+
+
+
+<article id="cinco">
+  <div class="content">
+    <div class="item-header">
+      <a href="V.8 Poblaciвn hablante de lengua indбgena.html"><img class="thumb" src="V.8.jpg" /></a>
+      <h3><i class="icon-map-marker"></i> <a href="V.8 Poblaciвn hablante de lengua indбgena.html">V.8 Población hablante de lengua indígena a nivel municipal</a></h3>
+    </div>
+    <div class="details">
+      <div class="meta">
+        <p>Map desde <a href="/people/profile/javier/" rel="author">javier</a>, 3 meses, 2 semanas hace</p>
+        <p class="abstract">La población hablante de alguna lengua indígena en la región en estudio corresponde a 41 914 parlantes que equivale a 20.4% de la población total registrada en 2005. Estos datos estadísticos refieren una representatividad indígena muy baja, si se considera que es una zona con raíces indígenas importantes, principalmente de la lengua zoque y la relación estrecha con las zonas tzotzil y tzeltal. En este sentido, la migración, la pérdida de valores culturales y la marginación, son condiciones que llevan a muchos indígenas a omitir o no reportar su lengua en los censos.</p>
+				<p>En los municipios influenciados directamente con el área del volcán Chichón, la población indígena solo representa una cuarta parte (26.7%) del total de la población registrada con esta característica, mientras que la correspondiente a los municipios influenciados indirectamente fue de 73.2%. Las lenguas predominantes corresponden al zoque y tzotzil, que en conjunto representan el 99.3% de la población parlante registrada. </p>
+        <ul class="nav stats">
+          <li><a href="/maps/352"><strong>27</strong> vers</a></li>
+          <li><a href="/maps/352#rate"><strong><span class="avg_rating" data-rating="0"> <span class="overall_rating"></span></span></strong>Puntuación media (0 votes)</a></li>
+        </ul>
+      </div> <!-- /.meta -->
+      <div class="tools">
+     <p id="uno">
+          <a href="/maps/352/download" class="btn btn-mini">Descargar</a>
+          <a href="/maps/352/view" class="btn btn-mini">View</a>
+        </p>
+      </div> 
+    </div> <!-- /.details --> 
+  </div> <!-- /.content -->
+</article>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+  
+
+<div class="pagination">
+    <span>results 1-4 of 43</span>
+    <ul class="pager">
+      <li>
+        
+        <span class="disabled prev">previo</span>
+        
+      </li>
+      <li>page <b class="current page">1</b> of <b class="page_total">11</b>
+      </li>
+      <li>
+        
+        <a href="?page=2" class="next more">Siguiente</a>
+        
+      </li>
+    </ul>   
+</div>
+
+
+        </div>
+      </div>
+    </div>
+
+  
+
+        </div>
+      </div> <!-- /.container -->
+    </div>
+    
+    
+    
+    <footer class="footer">
+      <div class="container">
+        <div class="pull-left">
+          Proporcionado por: <a href="http://geonode.org">GeoNode</a> <em>Versión 2.0</em> |
+          <a href="/developer/">Desarrolladores</a> |
+          <a href="/about/">Acerca de</a>
+        </div>
+        <div class="pull-right">
+        
+          
+          <form class="form-inline" action="/i18n/setlang/" method="post">
+          <input type='hidden' name='csrfmiddlewaretoken' value='ogerI1O2T541J9ayYxXtem0Xh4jU8V9f' />
+            <label>Idioma</label>
+            <select class="input span2" name="language" onchange="javascript:form.submit()">
+              
+              <option value="en" >
+                English
+              </option>
+              
+              <option value="es"  selected="selected">
+                Español
+              </option>
+              
+              <option value="it" >
+                Italiano
+              </option>
+              
+              <option value="fr" >
+                Français
+              </option>
+              
+              <option value="de" >
+                Deutsch
+              </option>
+              
+              <option value="el" >
+                Ελληνικά
+              </option>
+              
+              <option value="id" >
+                Bahasa Indonesia
+              </option>
+              
+              <option value="zh-cn" >
+                中文
+              </option>
+              
+              <option value="ja" >
+                日本人
+              </option>
+              
+              <option value="fa" >
+                Persian
+              </option>
+              
+              <option value="pt" >
+                Portuguese
+              </option>
+              
+              <option value="ru" >
+                Russian
+              </option>
+              
+              <option value="vi" >
+                Vietnamese
+              </option>
+              
+            </select>
+          </form>
+        
+        </div> <!-- /.pull-right -->
+      </div> <!-- /.container -->
+    </footer>
+    
+    
+    
+    <script src="/static/lib/js/assets.min.js"></script>
+    
+    <script src="/static/geonode/js/utils/utils.js"></script>
+    <script src="/static/geonode/js/base/base.js"></script>
+    <script>
+      $("#search").select2({
+        minimumInputLength: 1,
+        placeholder: 'Search...',
+        width: 'element',     
+        ajax: {
+          url: '/search/api',
+          data: function(term,page){
+            page = (page - 1) * 10;
+            return {
+              type: 'all',
+              limit: 10,
+              sort: 'none',
+              start: page,
+              q: term
+            }
+          },
+          results: function(data, page) {
+            var more = (page * 10) < data.total;
+            return {
+              results: $.map(data.results,function(object){
+                return {id: object.id, text: object.title};
+              }),
+              more: more
+            }
+          }          
+        },
+        createSearchChoice:function(term, data) { if ($(data).filter(function() { return this.text.localeCompare(term)===0; }).length===0) {return {id:term, text:term};} 
+        },
+        formatSelection: function(item){
+          $('#search').val(item.text);
+          $('#search').parent().submit();
+        }
+      });
+    </script>
+
+    
+  <script type="text/javascript">
+  var default_type = 'map';
+  </script>
+  
+<script src="/static/geonode/js/search/global_search.js"></script>
+<script src="/static/geonode/js/search/explore.js"></script>
+<script>
+    initial_query = '';
+</script>
+
+
+
+    <script type="text/javascript" src="/jsi18n/"></script>
+    <script type="text/javascript" src="/lang.js"></script>
+    <style type="text/css">
+      .select2-drop{
+        color: black;
+      }
+    </style>
+  </body>
+</html>
+
+

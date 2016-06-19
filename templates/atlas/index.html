@@ -1,0 +1,285 @@
+{% extends "site_base.html" %}
+{% load i18n %}
+{% load url from future %}
+{% load agon_ratings_tags %}
+{% load base_tags %}
+{% load maps_tags %}
+{% load pagination_tags %}
+{% load taggit_extras %}
+{% load staticfiles %}
+
+
+
+{% overall_rating map "map" as map_rating %}
+{% num_ratings map as num_votes %}
+  
+{% block title %}{% block title_sub %}{% trans "Explore Atlas" %}{% endblock %} - {{ block.super }} {% endblock %}
+
+{% block body_class %}maps{% endblock %}
+
+{% block body_outer %}
+  <div class="span12">
+ 
+
+
+       <h2 class="page-title">Explorar Temas de Atlas</h2>
+    </div>
+
+ <a href= /atlas/cargarAtlas  class="btn btn-large btn-primary pull-right strong">{% trans "Crear Atlas " %}</a>
+
+<a href= /atlas/cargarHoja  class="btn btn-large btn-primary pull-right strong">{% trans "Crear Hoja de Atlas" %}</a>
+
+
+
+  </div>
+
+
+
+    <div class="content-wrap">
+      
+      <div class="container">
+        <div class="row">
+        
+
+     <div class="span8 filter">      
+      
+
+
+    </div>
+    <div class="span4">
+      <div class="pull-right" data-viewby="list">
+        
+<nav class="viewby">
+    Ver por
+    <a href="" class="grid"><i class="icon-th"></i> Grilla</a>
+    <a href="" class="list"><i class="icon-th-list"></i> Lista</a>
+</nav>
+
+      </div>
+    </div>
+    <div class="span12">
+      <div class="row" id="contain-slider">
+        <div class="span4">
+          <div class="selections">
+            <h4>
+              Tus selecciones
+              <a href="." id="clear-search" class="pull-right">Clear all</a>
+            </h4>
+          </div>
+          <div id="slide-pane">
+            <a href="#" class="toggle toggle-pane"><i class="icon-chevron-left"></i></a>
+             
+                {% with type='map' %}
+            {% include "search/_extent_filter.html" %}
+            {% include "search/_general_filters.html" %}
+            {% endwith %}
+
+
+<nav class="filter">
+  <h2><a href="#" class="toggle toggle-nav"><i class="icon-chevron-right"></i>Hojas</a></h2>
+
+  <ul class="nav hide" id="categories">
+    <li><a data-class="all" class="active trigger-query">Todas las Categorías  <span class="badge pull-right"> {{hojas.count}}</span>  </a>    </li> 
+
+{% for hoja in hojas %}
+
+ <li><a href="{{ hoja.id }}" data-class="farming" class="trigger-query">  {{ hoja.tema }} </span>
+</a></li>
+{% endfor %}
+</ul>
+</nav>
+
+
+
+
+
+
+            
+          </div>
+        </div>
+        <div class="tab-content span8 paginate paginate-auto" id="search-content">
+          
+
+<div class="tab-pane active list paginate-contents" id="all">
+  <p class="search-count">Total: {{hojas.count }}  </p>
+
+
+
+  
+    
+      
+
+
+<style type="text/css">
+
+<style type="text/css">
+
+
+
+
+article#uno a ,article#uno h3 [class^="icon-"]{
+color: #6aa942;
+ }
+
+
+
+
+article#dos a ,article#dos h3 [class^="icon-"]{
+color: #F5CF36;
+ }
+
+article#tres a ,article#tres h3 [class^="icon-"]{
+color: #9A131B;
+ }
+
+article#cuatro a ,article#cuatro h3 [class^="icon-"]{
+color: #DF1A23;
+ }
+
+article#cinco a ,article#cinco h3 [class^="icon-"] {
+color: #252268;
+ }
+
+p#uno a{
+color: #FFFFFF;
+ }
+
+
+article#uno * .btn:first-child + .btn,article#uno * .btn:first-child {
+background: #6aa942;
+}
+
+
+article#dos * .btn:first-child + .btn,article#dos * .btn:first-child  {
+background: #F5CF36;
+}
+
+article#tres * .btn:first-child + .btn,article#tres * .btn:first-child  {
+background: #9A131B;
+}
+
+article#{{hoja.color}} * .btn:first-child + .btn,article#cuatro * .btn:first-child {
+background: #DF1A23;
+}
+
+article#cinco * .btn:first-child + .btn,article#cinco * .btn:first-child  {
+background: #252268;
+}
+
+.list article .item-header img {
+border: 1px solid #bbb;
+display: block;
+float: left;
+height: 125px;
+margin: 0;
+margin-right: 10px;
+overflow: hidden;
+padding: 0;
+width: 163px;
+}
+
+.list article .item-header img {
+border: 1px solid #bbb;
+display: block;
+float: left;
+height: 125px;
+margin: 0;
+margin-right: 10px;
+overflow: hidden;
+padding: 0;
+width: 163px;
+}
+
+
+
+.details{
+padding-bottom: 10%;
+s}
+.grid article .thumb {
+width: 197px;
+}
+
+
+
+
+</style>
+
+{% for hoja in hojas %}
+
+    <article id="{{ hoja.color }}">
+  <div class="content">
+    <div class="item-header">
+      <a href="{{ hoja.id }} "><img class="thumb" src="{{ hoja.thumbnail.url}}" /></a>
+      <h3><i class="icon-map-marker"></i> <a href="{{ hoja.id }}">{{hoja.tema|capfirst}} {{hoja.nombre|capfirst}}</a></h3>
+    </div>
+    <div class="details">
+      <div class="meta">
+        <p>Autores de la hoja: <a href=" "  rel="author">  </a>{{hoja.fecha|timesince }}</p>
+        <p class="abstract">{{hoja.descripcion|capfirst|truncatechars:40}}</p>
+        <ul class="nav list-group">
+<div class="btn-group">
+
+
+
+
+<button type="button" class="btn btn-primary dropdown-toggle pull-right" data-toggle="dropdown">
+Mapas en esta hoja:<span class="caret"></span>
+</button>
+
+
+
+<ul class="dropdown-menu" role="menu">
+{% for results in hoja.mapa.all %}
+<li><a href="{{ hoja.id }}"> {{results.title|capfirst}} </a></li>
+<li><a href=" /maps/{{ results.id }}/download">{% trans "Download" %}</a></li>
+<li><a href=" /maps/{{ results.id }}"> {% trans "Ver" %}</a> </li>
+{% endfor %} 
+
+   </ul>
+
+
+
+
+
+
+</ul>
+</div> <!-- /.meta -->
+</div> <!-- /.details --> 
+</div> <!-- /.content -->
+</article>
+
+
+
+{% endfor %}      
+
+
+{{ contacts.count }}
+
+<div class="pagination">
+    <span class="step-links">
+        {% if contacts.has_previous %}
+            <a href="?page={{ contacts.previous_page_number }}">previous</a>
+        {% endif %}
+        <span class="current">
+            Page {{ contacts.number }} of {{ contacts.paginator.num_pages }}.
+        </span>
+        {% if contacts.has_next %}
+    <a href="?page={{ contacts.next_page_number }}">next</a>
+        {% endif %}
+    </span>
+</div>
+
+{% endblock %}
+
+
+
+
+{% block extra_script %}
+  <script type="text/javascript">
+  var default_type = 'map';
+  </script>
+
+  {% with include_spatial='true' %}
+  {% include 'search_scripts.html' %}
+  {% endwith %}
+{% endblock extra_script %}

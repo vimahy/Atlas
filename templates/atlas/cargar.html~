@@ -1,0 +1,120 @@
+{% extends 'site_base.html' %}
+{% block body %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> Cargar hoja de Atlas</title>
+    </head>
+    <body>
+<h1>Agregar hoja</h1>
+<h3>Datos sobre la hoja</h3>
+
+        <form id="cargar_form" method="post" action="/atlas/cargar/">
+
+            
+        
+
+
+            {% csrf_token %}
+            {% for hidden in formHoja_atlas.hidden_fields %}
+            {{ hidden }}
+            {% endfor %}
+            {% for field in formHoja_atlas.visible_fields %}
+            {{ field.errors }}
+            {{ field.help_text }}
+			<BR>  </BR>
+           {{ field }}
+			<BR>  </BR>
+            {% endfor %}
+<h3>Autores de la hoja </h3>
+
+            {% csrf_token %}
+            {% for hidden in formAutor.hidden_fields %}
+            {{ hidden }}
+            {% endfor %}
+            {% for field in formAutor.visible_fields %}
+            {{ field.errors }}
+            {{ field.help_text }}
+			<BR>  </BR>
+            {{ field }}
+			<BR>  </BR>
+            {% endfor %}
+
+<h3>Subir tabla</h3>
+
+            {% csrf_token %}
+            {% for hidden in formTabla.hidden_fields %}
+            {{ hidden }}
+            {% endfor %}
+            {% for field in formTabla.visible_fields %}
+            {{ field.errors }}
+            {{ field.help_text }}
+			<BR>  </BR>
+            {{ field }}
+			<BR>  </BR>
+            {% endfor %}
+
+
+<h3>Subir leyenda</h3>
+
+            {% csrf_token %}
+            {% for hidden in formLeyenda.hidden_fields %}
+            {{ hidden }}
+            {% endfor %}
+            {% for field in formLeyenda.visible_fields %}
+            {{ field.errors }}
+            {{ field.help_text }}
+			<BR>  </BR>
+            {{ field }}
+			<BR>  </BR>
+            {% endfor %}
+
+<h3>Subir imagen</h3>
+
+            {% csrf_token %}
+            {% for hidden in formImagen.hidden_fields %}
+            {{ hidden }}
+            {% endfor %}
+            {% for field in formImagen.visible_fields %}
+            {{ field.errors }}
+            {{ field.help_text }}
+			<BR>  </BR>
+            {{ field }}
+			<BR>  </BR>
+            {% endfor %}
+
+<h3>Subir gráfica</h3>
+
+            {% csrf_token %}
+            {% for hidden in formGrafica.hidden_fields %}
+            {{ hidden }}
+            {% endfor %}
+            {% for field in formGrafica.visible_fields %}
+            {{ field.errors }}
+            {{ field.help_text }}
+			<BR>  </BR>
+            {{ field }}
+			<BR>  <a href="/atlas/cargar/">Agregar Atlas</a></BR>
+            {% endfor %}
+
+<h3>Referencias</h3>
+
+            {% csrf_token %}
+            {% for hidden in formReferencia.hidden_fields %}
+            {{ hidden }}
+            {% endfor %}
+            {% for field in formReferencia.visible_fields %}
+            {{ field.errors }}
+            {{ field.help_text }}
+			<BR>  </BR>
+            {{ field }}
+			<BR>  </BR>
+            {% endfor %}
+
+<button type="submit" id="upload-button" class="btn btn-danger">Upload</button>
+            <input type="submit" name="submit" value="Crear hoja " />
+        </form>
+    </body>
+
+</html>
+{% endblock %}
